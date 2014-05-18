@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+    namespace Thin;
+
+    require_once __DIR__ . DIRECTORY_SEPARATOR . 'init.php';
+
+    $cli = new Cli(array_slice($argv, 1));

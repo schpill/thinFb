@@ -1,0 +1,3 @@
+<?php tpl('header/classic.phtml'); ?>
+Bienvenue!
+<?php tpl('footer/classic.phtml'); ?>
