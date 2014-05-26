@@ -133,6 +133,17 @@
         return em('db', $table);
     });
 
+    context()->isPost(function($except = array()) {
+        if (count($_POST) && count($except)) {
+            foreach ($except as $key) {
+                if (Arrays::exists($key, $_POST)) {
+                    unset($_POST[$key]);
+                }
+            }
+        }
+        return count($_POST) ? true : false;
+    });
+
     function checkCulture($culture, $route)
     {
         $test1 = ctype_alpha($culture);

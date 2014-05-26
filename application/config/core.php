@@ -60,10 +60,26 @@
         return $i;
     });
 
+    event('txtdb', function($db = 'core') {
+        static $i;
+        if (null === $i) {
+            $i = new Txtdb($db);
+        }
+        return $i;
+    });
+
+    event('qdb', function($db = 'core') {
+        static $i;
+        if (null === $i) {
+            $i = new Qucikdb($db);
+        }
+        return $i;
+    });
+
     event('bucket', function() {
         static $i;
         if (null === $i) {
-            $i = new Bucket('abc');
+            $i = new Bucket('fb');
         }
         return $i;
     });
@@ -86,6 +102,33 @@
         $db = isAke($i, $name, null);
         if (is_null($db)) {
             $i[$name] = $db = new Memorydb($name);
+        }
+        return $db;
+    });
+
+    event('dbm', function($entity, $ns = 'core') {
+        static $i = array();
+        $db = isAke($i, $entity, null);
+        if (is_null($db)) {
+            $i[$entity] = $db = new Txtdata($entity, $ns);
+        }
+        return $db;
+    });
+
+    event('qbm', function($entity, $ns = 'core') {
+        static $i = array();
+        $db = isAke($i, $entity, null);
+        if (is_null($db)) {
+            $i[$entity] = $db = new Quickdata($entity, $ns);
+        }
+        return $db;
+    });
+
+    event('sbm', function($entity, $ns = 'core') {
+        static $i = array();
+        $db = isAke($i, $entity, null);
+        if (is_null($db)) {
+            $i[$entity] = $db = new Speedata($entity, $ns);
         }
         return $db;
     });

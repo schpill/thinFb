@@ -1,0 +1,1 @@
+{"table":2,"field":3,"name":"genre","type":"set","length":"255","default":"electronic,media,book,dvd","label":"Genre","is_index":false,"can_be_null":false,"id":3}
