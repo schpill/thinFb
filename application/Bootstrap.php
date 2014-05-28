@@ -58,7 +58,37 @@
             $files = glob($pattern);
             if (count($files)) {
                 foreach ($files as $file) {
-                    require_once $file;
+                    static::inc($file);
+                }
+            }
+        }
+
+        private static function inc($file)
+        {
+            $check = function () {
+                if (php_sapi_name() !== 'cli') {
+                    if (version_compare(phpversion(), '5.4.0', '>=')) {
+                        return session_status() === PHP_SESSION_ACTIVE ? true : false;
+                    } else {
+                        return session_id() === '' ? false : true;
+                    }
+                }
+                return false;
+            };
+            if (false === $check()) {
+                require_once $file;
+            } else {
+                $session = session('bootstrap');
+                $key = sha1($file);
+                $getter = getter($key);
+                $setter = setter($key);
+                $sessObj = $session->$getter();
+                if (null === $sessObj) {
+                    $code = fgc($file);
+                    eval($code);
+                    $session->$setter($code);
+                } else {
+                    eval($sessObj);
                 }
             }
         }
